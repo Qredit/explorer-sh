@@ -12,10 +12,12 @@ import {
 } from "./Cells";
 import explorer from "../../lib/api";
 import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
+import { Blockchains } from "../../lib/blockchains";
+import { networkInterfaces } from "os";
 
 const { lang } = i18n;
 const { navigation } = lang;
-type DelegatesTableState = {delegates:Array<any>, interval: any,meta: any, supply: string, currentPage: number, pager: Array<any>, loading:boolean}
+type DelegatesTableState = {delegates:Array<any>, interval: any,meta: any, supply: string, currentPage: number, pager: Array<any>, loading:boolean, network:any}
 
 function isForging(time:string) : number {
   var d = new Date();
@@ -38,6 +40,7 @@ class DelegatesTable extends React.Component<{status: string}, DelegatesTableSta
   
   constructor(props:any) {
     super(props)
+    let blockchain = this.context;
     this.state = {
         delegates: [],
         meta: {},
@@ -45,7 +48,8 @@ class DelegatesTable extends React.Component<{status: string}, DelegatesTableSta
       supply: "",
       currentPage: 1,
       pager: [],
-      loading: true
+      loading: true,
+      network: {}
     };
     this.getData = this.getData.bind(this);
     this.goFirst = this.goFirst.bind(this);
@@ -89,7 +93,7 @@ class DelegatesTable extends React.Component<{status: string}, DelegatesTableSta
     if (this.props.status == "active") {
       explorer.on(blockchain).core
       .api("delegates")
-      .all({limit:51})
+      .all({limit:Blockchains.find((bc) => bc.networks.find((network: { subdomain: any; }) => network.subdomain == blockchain)).delegates})
       .then((d) => {
         this.setState({ delegates: d.body.data , meta: d.body.meta});
         this.setState({pager: this.paginator(page)})
@@ -105,7 +109,7 @@ class DelegatesTable extends React.Component<{status: string}, DelegatesTableSta
      {
       explorer.on(blockchain).core
       .api("delegates")
-      .all({limit:51, page:page+1})
+      .all({limit:Blockchains.find((bc) => bc.networks.find((network: { subdomain: any; }) => network.subdomain == blockchain)).delegates, page:page+1})
       .then((d) => {
         this.setState({ delegates: d.body.data , meta: d.body.meta});
         this.setState({pager: this.paginator(page)})
@@ -175,7 +179,7 @@ class DelegatesTable extends React.Component<{status: string}, DelegatesTableSta
 
   componentDidMount() {
     let blockchain = this.context;
-    
+    this.setState({network:Blockchains.find((bc) => bc.networks.find((network) => network.subdomain == blockchain)).networks.find((network) => network.subdomain == blockchain)})
     explorer.on(blockchain).core.get("blockchain").then((response) => {
       this.setState({supply: response.body.data.supply});
   })
@@ -214,9 +218,9 @@ class DelegatesTable extends React.Component<{status: string}, DelegatesTableSta
                   <span className="rounded-full bg-secondary dark:bg-dark-secondary p-2 text-greenish">#{delegate.rank}</span>
                 </td>
                 <td className="text-center">
-                <a href={`/ark/wallet/${delegate.address}`} className="text-greenish">{delegate.username}</a>
+                <a href={`/${this.context}/wallet/${delegate.address}`} className="text-greenish">{delegate.username}</a>
                 </td>
-                <td className="text-center">{parseInt((parseInt(delegate.votes)/1000000).toFixed(0)).toLocaleString("us")} ARK  <span className="text-gray-600 dark:text-gray-400">{((100 * delegate.votes) / parseInt(this.state.supply)).toFixed(4)}%</span></td>
+                <td className="text-center">{parseInt((parseInt(delegate.votes)/1000000).toFixed(0)).toLocaleString("us")} {this.state.network.symbol}  <span className="text-gray-600 dark:text-gray-400">{((100 * delegate.votes) / parseInt(this.state.supply)).toFixed(4)}%</span></td>
                 {this.props.status == "active" && <td className="text-center">
                   {delegate.blocks.produced > 0 && delegate.blocks.last && isForging(delegate.blocks.last.timestamp.human) == 0 ? <span className="rounded px-2 py-1 bg-secondary dark:bg-dark-secondary">yes</span>: <span className="rounded px-2 py-1 bg-secondary dark:bg-dark-secondary">no</span>}
                 </td>}

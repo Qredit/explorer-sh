@@ -12,15 +12,19 @@ import { Blockchains } from "../../lib/blockchains";
 import explorer from "../../lib/api";
 import { AiOutlineTeam } from "react-icons/ai";
 type ShortIdProps = { id: string };
-export const ShortId = ({ id }: ShortIdProps) => (
+export const ShortId = ({ id }: ShortIdProps) => {
+  let blockchain = useContext(BlockchainContext)
+  return (
   <div className="content-center w-full flex px-2 justify-center">
     
-    <a href={`/ark/transactions/${id}`}><BsFillEyeFill className="mx-auto text-greenish" /></a>
+    <a href={`/${blockchain}/transactions/${id}`}><BsFillEyeFill className="mx-auto text-greenish" /></a>
   </div>
-);
+);}
 
 type ShortCopyProps = { text: string };
-export const ShortCopy = ({ text }: ShortCopyProps) => (
+export const ShortCopy = ({ text }: ShortCopyProps) => {
+  let blockchain = useContext(BlockchainContext)
+  return (
   <div className="text-greenish flex content-center">
   <div className="mx-auto `${className}`">
   <FiCopy className="text-gray-600 dark:text-gray-400 mr-1 pt-1 mb-2 hover:text-white inline-block" onClick={() => {copytoClipboard(text)}} />
@@ -28,19 +32,24 @@ export const ShortCopy = ({ text }: ShortCopyProps) => (
   </div>
 </div>
 );
+  }
 
 type BlockIdProps = { id: string };
-export const BlockId = ({ id }: ShortIdProps) => (
+export const BlockId = ({ id }: ShortIdProps) => {
+  let blockchain = useContext(BlockchainContext)
+  return (
   <div className="justify-center w-full flex">
-    <a href={`/ark/blocks/${id}`} className="text-greenish hover:text-greenish hover:underline">{`${id.substr(0, 10)}...${id.substr(-10)}`}</a>
+    <a href={`/${blockchain}/blocks/${id}`} className="text-greenish hover:text-greenish hover:underline">{`${id.substr(0, 10)}...${id.substr(-10)}`}</a>
   </div>
-);
+);}
 
-export const TxArrow = () => (
+export const TxArrow = () => {
+  let blockchain = useContext(BlockchainContext)
+  return (
   <div className="rounded-full bg-[#e4e7ee] dark:bg-dark-hoverish items-center">
     <BiRightArrowAlt className="inline-block mb-1 text-greenish"/>
   </div>
-);
+);}
 
 type ConfirmsProps = { confirms: number };
 export const Confirms = ({ confirms }: ConfirmsProps) => {
@@ -79,7 +88,7 @@ export const ShortWallet = ({ id, multi }: ShortWalletProps) => {
     <div className="mx-auto `${className}`">
     
     {multi.length == 0 && 
-    <div>{known_wallet? <AiOutlineTeam className="text-greenish inline-block"/> : <FiCopy className="text-gray-600 dark:text-gray-400 mr-1 pt-1 mb-2 hover:text-white inline-block" onClick={() => {copytoClipboard(id)}} />} <a href={`/ark/wallet/${id}`} className="text-greenish hover:text-greenish hover:underline mb-1">{known_wallet? known_wallet.name : `${id.substr(0, 5)}...${id.substr(-5)}`}</a></div>}
+    <div>{known_wallet? <AiOutlineTeam className="text-greenish inline-block"/> : <FiCopy className="text-gray-600 dark:text-gray-400 mr-1 pt-1 mb-2 hover:text-white inline-block" onClick={() => {copytoClipboard(id)}} />} <a href={`/${blockchain}/wallet/${id}`} className="text-greenish hover:text-greenish hover:underline mb-1">{known_wallet? known_wallet.name : `${id.substr(0, 5)}...${id.substr(-5)}`}</a></div>}
     {multi.length>0 &&
     <span className="text-greenish hover:underline mb-1"> <RiUserReceived2Line className="inline-block"/> {multi.length} recipients</span>
     }
@@ -90,30 +99,37 @@ export const ShortWallet = ({ id, multi }: ShortWalletProps) => {
 
 ShortWallet.defaultProps = {multi: []}
 
-export const ShortTx = ({ id }: ShortWalletProps) => (
+export const ShortTx = ({ id }: ShortWalletProps) => {
+  let blockchain = useContext(BlockchainContext)
+  return (
   <div className="text-greenish flex content-center">
     <div className="mx-auto `${className}`">
     <FiCopy className="text-gray-600 dark:text-gray-400 mr-1 pt-1 mb-2 hover:text-white inline-block" onClick={() => {copytoClipboard(id)}} />
-    <a href={`/ark/transactions/${id}`} className="text-greenish hover:text-greenish hover:underline mb-1">{`${id.substr(0, 5)}...${id.substr(-5)}`}</a>
+    <a href={`/${blockchain}/transactions/${id}`} className="text-greenish hover:text-greenish hover:underline mb-1">{`${id.substr(0, 5)}...${id.substr(-5)}`}</a>
     </div>
   </div>
-);
+);}
 
 
 
-export const LongWallet = ({ id, className }: ShortWalletProps) => (
+export const LongWallet = ({ id, className }: ShortWalletProps) => {
+  let blockchain = useContext(BlockchainContext)
+  return (
   <div className="text-greenish flex content-center">
     <div className={className}>
     <FiCopy className="text-gray-600 dark:text-gray-400 mr-1 pt-1 mb-2 hover:text-white inline-block" onClick={() => {copytoClipboard(id)}} />
-    <a href={`/ark/wallet/${id}`} className="text-greenish hover:text-greenish hover:underline mb-1 inline-block">{`${id.substr(0, 10)}...${id.substr(-10)}`}</a>
+    <a href={`/${blockchain}/wallet/${id}`} className="text-greenish hover:text-greenish hover:underline mb-1 inline-block">{`${id.substr(0, 10)}...${id.substr(-10)}`}</a>
     </div>
   </div>
-);
+);}
 
 type AmountProps = { value: number };
-export const Amount = ({ value }: AmountProps) => (
-  <div className="">{parseFloat(parseFloat((value / 100000000).toString()).toFixed(2).replace(/\.0+$/,'')).toLocaleString("us")} ARK</div>
-);
+export const Amount = ({ value }: AmountProps) => {
+  let blockchain = useContext(BlockchainContext)
+  let symbol = Blockchains.find((bc) => bc.networks.find((network) => network.subdomain == blockchain)).networks.find((network) => network.subdomain == blockchain).symbol
+  return (
+  <div className="">{parseFloat(parseFloat((value / 100000000).toString()).toFixed(2).replace(/\.0+$/,'')).toLocaleString("us")} {symbol}</div>
+);}
 
 type BoolBadgeProps = { value: boolean };
 export const BoolBadge = ({ value }: BoolBadgeProps) => {

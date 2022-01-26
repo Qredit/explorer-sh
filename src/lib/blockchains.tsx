@@ -2,74 +2,110 @@
 	Default blockchains for explorer-sh. 
 */
 
+
+
 export const Blockchains = [
  {
     title: "ARK",
     logo: "/assets/img/currencies/ark.svg",
-    coingecko_id: "ark",
-    networks: {
-      main: {
+    delegates: 51,
+    networks: [
+      {
+        name: "main",
+        title: "ARK Mainnet",
         symbol: "ARK",
         url: "https://api.ark.io/api",
         slp_url: "https://aslp.qredit.dev/api",
+        coingecko_id: "ark",
+        subdomain: "ark"
       },
-      dev: {
+      {
+        name: "dev",
+        title: "ARK Devnet",
         symbol: "ARK",
         url: "https://dapi.ark.io/api",
+        slp_url:"",
+        subdomain: "dark"
       },
-    },
+    ]
   },
 {
-    title: "Swipe",
-    logo: "/assets/img/currencies/sxp.png",
-    coingecko_id: "",
-    networks: {
-      dev: {
-        symbol: "SXP",
-        url: "https://dapi.swipechain.org/api",
+    title: "Solar",
+    logo: "/assets/img/currencies/solar.png",
+    delegates: 53,
+    networks: [
+      {
+        name: "dev",
+        title: "Solar Devnet",
+        symbol: "dSXP",
+        slp_url:"",
+        coingecko_id: "",
+        url: "https://sxp.testnet.sh/api/",
+        subdomain: "dsxp"
       },
-    },
+    ]
   },
 {
     title: "Qredit",
     logo: "/assets/img/currencies/xqr.svg",
-    coingecko_id: "qredit",
-    networks: {
-      main: {
+    delegates: 51,
+    networks: [
+      {
+        name: "main",
+        title: "Qredit Mainnet",
+        coingecko_id: "qredit",
         symbol: "XQR",
         url: "https://qredit.cloud/api/v2",
         slp_url: "https://qslp.qredit.cloud/api",
+        subdomain: "xqr"
       },
-      dev: {
+      {
+        name: "dev",
+        title: "Qredit Devnet",
         symbol: "XQR",
+        slp_url:"",
         url: "https://qredit.dev/api/v2",
+        subdomain: "dxqr"
       },
-    },
+    ],
   },
 {
     title: "Compendia",
     logo: "/assets/img/currencies/bind.svg",
-    coingecko_id: "wrapped-bind",
-    networks: {
-      main: {
+    delegates: 51,
+    networks: [
+      {
+        name: "main",
+        coingecko_id: "wrapped-bind",
+        title: "Compendia Mainnet",
         url: "https://apis.compendia.org/api/v2",
         symbol: "ß",
+        slp_url:"",
+        subdomain: "bind"
       },
-      test: {
+      {
+        name: "test",
+        title: "Compendia Testnet",
         symbol: "Tß",
+        slp_url:"",
         url: "https://apis-testnet.compendia.org/api/v2",
+        subdomain: "tbind"
       },
-    },
+    ],
   },
  {
     title: "Blockpool",
-    coingecko_id: "",
+    delegates: 51,
     logo: "/assets/img/currencies/bpl.svg",
-    networks: {
-      main: {
+    networks: [
+      {
+        name: "main",
+        title: "Blockpool Mainnet",
         symbol: "β",
+        slp_url:"",
         url: "http://explorer.blockpool.io:9031/api",
+        subdomain: "bpl"
       },
-    },
+    ],
   },
 ];

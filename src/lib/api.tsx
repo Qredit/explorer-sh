@@ -2,43 +2,33 @@ import { Connection } from "@arkecosystem/client";
 import { Blockchains } from "./blockchains";
 
 
-export interface NetworksByPath {
-    [key: string]: any;
-  }
-  
-
-const networksByPath: NetworksByPath = {
-  "ark": Blockchains.find((blockchain) => blockchain.title == "ARK").networks.main,
-  "dark": Blockchains.find((blockchain) => blockchain.title == "Qredit").networks.dev,
-};
-
-
-
 const explorer = {
   on: (blockchain_name: string) => {
+    let network = Blockchains.find((blockchain) => blockchain.networks.find((network) => network.subdomain == blockchain_name)).networks.find((network) => network.subdomain == blockchain_name)
+
     return {
-      core: new Connection(networksByPath[blockchain_name].url),
+      core: new Connection(network.url),
       slp: {
         tokens: () => {
-            return fetch(networksByPath[blockchain_name].slp_url + "/tokens").then((res) => res.json())
+            return fetch(network.slp_url + "/tokens").then((res) => res.json())
         },
         token: (address:string) => {
-          return fetch(networksByPath[blockchain_name].slp_url + "/tokenWithMeta/"+address).then((res) => res.json())
+          return fetch(network.slp_url + "/tokenWithMeta/"+address).then((res) => res.json())
       },
       tokenTransactions: (token_id:string) => {
-         return fetch(networksByPath[blockchain_name].slp_url + "/transactions/"+token_id).then((res) => res.json())
+         return fetch(network.slp_url + "/transactions/"+token_id).then((res) => res.json())
       },
       transaction: (tx_id:string) => {
-        return fetch(networksByPath[blockchain_name].slp_url + "/transaction/"+tx_id).then((res) => res.json())
+        return fetch(network.slp_url + "/transaction/"+tx_id).then((res) => res.json())
      },
       tokenHolders: (token_id:string) => {
-        return fetch(networksByPath[blockchain_name].slp_url + "/addressesByTokenId/"+token_id).then((res) => res.json())
+        return fetch(network.slp_url + "/addressesByTokenId/"+token_id).then((res) => res.json())
       },
       tokenHoldings: (address:string) => {
-        return fetch(networksByPath[blockchain_name].slp_url + "/address/"+address).then((res) => res.json())
+        return fetch(network.slp_url + "/address/"+address).then((res) => res.json())
       },
       tokensByOwner: (address:string) => {
-        return fetch(networksByPath[blockchain_name].slp_url + "/tokensByOwner/"+address).then((res) => res.json())
+        return fetch(network.slp_url + "/tokensByOwner/"+address).then((res) => res.json())
       }
       
       },
@@ -178,6 +168,9 @@ const explorer = {
               }
           ];          
             break;
+          default:
+                return [];
+                break;
         }
       }
     };

@@ -103,7 +103,7 @@ static contextType = BlockchainContext;
                   </div>
                 </div>
                 <div className="ml-5 hidden sm:inline">
-                <input type="text" className=" appearance-none border-none rounded w-full py-2 px-3 text-gray-100 bg-secondary dark:bg-dark-secondary focus:outline-none " placeholder="Search in ARK blockchain..." />
+                <input type="text" className=" appearance-none border-none rounded w-full py-2 px-3 text-gray-100 bg-secondary dark:bg-dark-secondary focus:outline-none " placeholder="Search in the blockchain..." />
                 </div>
               </div>
 

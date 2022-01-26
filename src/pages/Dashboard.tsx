@@ -12,6 +12,7 @@ import {
   ShortWallet,
   Timestamp,
 } from "../components/tables/Cells";
+import { Blockchains } from "../lib/blockchains";
 
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
@@ -37,36 +38,46 @@ class Dashboard extends React.Component<{}, any> {
   }
 
   updateCurrency() {
+    let blockchain = this.context;
+    let current_network = Blockchains.find((bc) => bc.networks.find((network) => network.subdomain == blockchain)).networks.find((network) => network.subdomain == blockchain)
     this.setState({ currency: localStorage.getItem("currency")? localStorage.getItem("currency") : "eur" });
-    fetch(
-      "https://api.coingecko.com/api/v3/coins/ark/market_chart?vs_currency=" +
-        this.state.currency +
-        "&days=1"
-    ).then((body) => {
-      body.json().then((market_data) => {
-        console.log(market_data);
-        this.setState({ market_data: market_data });
+    
+
+    if (current_network.coingecko_id.length > 0) {
+      fetch(
+        "https://api.coingecko.com/api/v3/coins/" + current_network.coingecko_id + "/market_chart?vs_currency=" +
+          this.state.currency +
+          "&days=1"
+      ).then((body) => {
+        body.json().then((market_data) => {
+          console.log(market_data);
+          this.setState({ market_data: market_data });
+        });
       });
-    });
+    }
   }
 
   componentDidMount() {
     let blockchain = this.context;
+    let current_network = Blockchains.find((bc) => bc.networks.find((network) => network.subdomain == blockchain)).networks.find((network) => network.subdomain == blockchain)
 
-    fetch("https://api.coingecko.com/api/v3/coins/ark").then((body) => {
-      body.json().then((coin) => {
-        console.log(coin);
-        this.setState({ coin: coin });
+    if (current_network.coingecko_id.length > 0) {
+      fetch("https://api.coingecko.com/api/v3/coins/"+current_network.coingecko_id).then((body) => {
+        body.json().then((coin) => {
+          console.log(coin);
+          this.setState({ coin: coin });
+        });
       });
-    });
-    fetch(
-      "https://api.coingecko.com/api/v3/coins/ark/market_chart?vs_currency=eur&days=1"
-    ).then((body) => {
-      body.json().then((market_data) => {
-        console.log(market_data);
-        this.setState({ market_data: market_data });
+      fetch(
+        "https://api.coingecko.com/api/v3/coins/"+current_network.coingecko_id+"/market_chart?vs_currency=eur&days=1"
+      ).then((body) => {
+        body.json().then((market_data) => {
+          console.log(market_data);
+          this.setState({ market_data: market_data });
+        });
       });
-    });
+    } 
+
 
     explorer
       .on(blockchain)
@@ -130,7 +141,7 @@ class Dashboard extends React.Component<{}, any> {
                 <input
                   type="text"
                   className=" appearance-none border-none  w-1/2 py-2 px-3 text-gray-600 dark:text-gray-400 bg-tertiary dark:bg-dark-tertiary hover:bg-hoverish dark:hover:bg-dark-hoverish focus-within:hover:bg-secondary focus-within:placeholder-transparent focus-within:bg-secondary dark:focus-within:bg-dark-hoverish focus:outline-none "
-                  placeholder="Search in ARK blockchain..."
+                  placeholder="Search in the blockchain..."
                 />{" "}
                 <div className="bg-greenish py-2 px-4 rounded-r">
                   <BiSearch className="text-xl text-white" />
@@ -156,7 +167,7 @@ class Dashboard extends React.Component<{}, any> {
                       {this.state.coin.market_data &&
                         this.state.coin.market_data.current_price[
                           this.state.currency
-                        ].toFixed(2)}{" "}
+                        ].toFixed(4)}{" "}
                       {this.state.currency}
                     </span>{" "}
                     <span className="text-gray-600 dark:text-gray-400 italic">
@@ -189,10 +200,18 @@ class Dashboard extends React.Component<{}, any> {
                   <span className="text">Marketcap</span>
                   <br />
                   <span className="text-greenish text-xl">
-                    {this.state.coin.market_data &&
+                    {this.state.coin.market_data && this.state.coin.market_data.market_cap[
+                        this.state.currency
+                      ] > 0 &&
                       this.state.coin.market_data.market_cap[
                         this.state.currency
-                      ].toLocaleString("us")}{" "}
+                      ].toLocaleString("us")}
+                      {this.state.coin.market_data && this.state.coin.market_data.market_cap[
+                        this.state.currency
+                      ] == 0 && this.state.coin.market_data.current_price &&
+                      ((parseInt(this.state.supply.length > 0? this.state.supply : "0") / 100000000)*this.state.coin.market_data.current_price[
+                        this.state.currency
+                      ]).toLocaleString("us")}
                     {this.state.currency}
                   </span>
                 </div>
@@ -398,7 +417,7 @@ class Dashboard extends React.Component<{}, any> {
                         Validated by{" "}
                         <a
                           className="text-greenish"
-                          href={`/ark/wallets/${block.generator.address}`}
+                          href={`/${this.context}/wallets/${block.generator.address}`}
                         >
                           {block.generator.username}
                         </a>{" "}
@@ -409,7 +428,7 @@ class Dashboard extends React.Component<{}, any> {
                   ))}
                 </div>
                 <a
-                  href="/ark/blocks"
+                  href={`/${this.context}/blocks`}
                   className="bg-greenish text-white rounded text-center drop-shadow-md w-full p-2 inline-block"
                 >
                   See all blocks
@@ -443,7 +462,7 @@ class Dashboard extends React.Component<{}, any> {
                   ))}
                 </div>
                 <a
-                  href="/ark/transactions"
+                  href={`/${this.context}/transactions`}
                   className="bg-greenish text-white rounded text-center drop-shadow-md w-full p-2 inline-block"
                 >
                   See all transactions

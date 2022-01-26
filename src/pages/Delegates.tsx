@@ -4,6 +4,7 @@ import { BsCheck, BsFillPauseFill, BsX } from "react-icons/bs";
 import { BlockchainContext } from "../BlockchainContext";
 import DelegatesTable from "../components/tables/DelegatesTable";
 import explorer from "../lib/api";
+import { Blockchains } from "../lib/blockchains";
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
@@ -28,6 +29,7 @@ class Delegates extends React.Component<
   {
     forging_status: { missed: number; forging: number; notforging: number };
     height: number;
+    delegates_count:number
   }
 > {
   static contextType = BlockchainContext;
@@ -37,6 +39,7 @@ class Delegates extends React.Component<
     this.state = {
       forging_status: { missed: 0, notforging: 0, forging: 0 },
       height: 0,
+      delegates_count: 51
     };
   }
   componentDidMount() {
@@ -44,10 +47,12 @@ class Delegates extends React.Component<
     let missed = 0,
       forging = 0,
       notforging = 0;
+      let delegates_count = Blockchains.find((bc) => bc.networks.find((network: { subdomain: any; }) => network.subdomain == blockchain)).delegates
+      this.setState({delegates_count:delegates_count});
     explorer
       .on(blockchain)
       .core.api("delegates")
-      .all({ limit: 51 })
+      .all({ limit: delegates_count})
       .then((d) => {
         d.body.data.map((delegate) => {
           switch (isForging(delegate.blocks.last.timestamp.human)) {
@@ -126,7 +131,7 @@ class Delegates extends React.Component<
             </div>
             <div className="bg-tertiary dark:bg-dark-tertiary rounded p-3 mt-3 sm:mt-0">
               <div className="text-greenish text-3xl text-center">
-                {this.state.height % 51}/51
+                {this.state.height % this.state.delegates_count}/{this.state.delegates_count}
               </div>
               <div className="text-center">Current round</div>
             </div>
