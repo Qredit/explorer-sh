@@ -138,111 +138,114 @@ class Dashboard extends React.Component<{}, any> {
               </div>
             </div>
           </div>
+          {this.state.coin.market_data && 
           <div className="rounded bg-tertiary dark:bg-dark-tertiary p-3 drop-shadow">
-            <div className="sm:grid sm:grid-cols-3 sm:space-x-3 sm:divide-x-2 sm:divide-secondary sm:dark:divide-dark-secondary">
-              <div className="space-y-4 divide-y-2 divide-secondary dark:divide-dark-secondary">
-                <div className="flex py-3">
-                  <div>
-                    <div className="rounded-full bg-secondary dark:bg-dark-secondary p-3 mx-3 text-2xl">
-                      <RiCoinLine />
-                    </div>
-                  </div>
-                  <div>
-                    <span className="text">Value</span>
-                    <br />
-                    <span className="">
-                      <span className="text-greenish text-2xl">
-                        {this.state.coin.market_data &&
-                          this.state.coin.market_data.current_price[
-                            this.state.currency
-                          ].toFixed(2)}{" "}
-                        {this.state.currency}
-                      </span>{" "}
-                      <span className="text-gray-600 dark:text-gray-400 italic">
-                        @{" "}
-                        {this.state.coin.market_data &&
-                          this.state.coin.market_data.current_price.btc.toFixed(
-                            5
-                          )}{" "}
-                        BTC
-                      </span>
-                      <span className="text-red-700">
-                        {" "}
-                        (
-                        {this.state.coin.market_data &&
-                          this.state.coin.market_data.price_change_percentage_24h.toFixed(
-                            2
-                          )}
-                        %)
-                      </span>
-                    </span>
+          <div className="sm:grid sm:grid-cols-3 sm:space-x-3 sm:divide-x-2 sm:divide-secondary sm:dark:divide-dark-secondary">
+            <div className="space-y-4 divide-y-2 divide-secondary dark:divide-dark-secondary">
+              <div className="flex py-3">
+                <div>
+                  <div className="rounded-full bg-secondary dark:bg-dark-secondary p-3 mx-3 text-2xl">
+                    <RiCoinLine />
                   </div>
                 </div>
-                <div className="flex py-3">
-                  <div>
-                    <div className="rounded-full bg-secondary dark:bg-dark-secondary p-3 mx-3 text-2xl">
-                      <MdOutlineAttachMoney />
-                    </div>
-                  </div>
-                  <div>
-                    <span className="text">Marketcap</span>
-                    <br />
-                    <span className="text-greenish text-xl">
+                <div>
+                  <span className="text">Value</span>
+                  <br />
+                  <span className="">
+                    <span className="text-greenish text-2xl">
                       {this.state.coin.market_data &&
-                        this.state.coin.market_data.market_cap[
+                        this.state.coin.market_data.current_price[
                           this.state.currency
-                        ].toLocaleString("us")}{" "}
+                        ].toFixed(2)}{" "}
                       {this.state.currency}
+                    </span>{" "}
+                    <span className="text-gray-600 dark:text-gray-400 italic">
+                      @{" "}
+                      {this.state.coin.market_data &&
+                        this.state.coin.market_data.current_price.btc.toFixed(
+                          5
+                        )}{" "}
+                      BTC
                     </span>
-                  </div>
+                    <span className="text-red-700">
+                      {" "}
+                      (
+                      {this.state.coin.market_data &&
+                        this.state.coin.market_data.price_change_percentage_24h.toFixed(
+                          2
+                        )}
+                      %)
+                    </span>
+                  </span>
                 </div>
               </div>
-              <div className=" border-secondary dark:border-dark-secondary space-y-4 divide-y-2 divide-secondary dark:divide-dark-secondary">
-                <div className="flex py-3">
-                  <div>
-                    <div className="rounded-full bg-secondary dark:bg-dark-secondary p-3 mx-3">
-                      CV
-                    </div>
-                  </div>
-                  <div>
-                    <span className="text">24hr volume</span>
-                    <br />
-                    <span className="text-greenish text-xl">
-                      {this.state.market_data.total_volumes &&
-                        parseInt(
-                          this.state.market_data.total_volumes[0][1]
-                        ).toLocaleString("us")}{" "}
-                      {this.state.currency}
-                    </span>
+              <div className="flex py-3">
+                <div>
+                  <div className="rounded-full bg-secondary dark:bg-dark-secondary p-3 mx-3 text-2xl">
+                    <MdOutlineAttachMoney />
                   </div>
                 </div>
-                <div className="flex py-3">
-                  <div>
-                    <div className="rounded-full bg-secondary dark:bg-dark-secondary p-3 mx-3">
-                      CV
-                    </div>
-                  </div>
-                  <div>
-                    <span className="text">24h Low / High</span>
-                    <br />
-                    <span className="text-greenish text-xl">
-                      {this.state.coin.market_data &&
-                        this.state.coin.market_data.low_24h[
-                          this.state.currency
-                        ].toLocaleString("us")}{" "}
-                      /{" "}
-                      {this.state.coin.market_data &&
-                        this.state.coin.market_data.high_24h[
-                          this.state.currency
-                        ].toLocaleString("us")}{" "}
-                      {this.state.currency.toUpperCase()}
-                    </span>
-                  </div>
+                <div>
+                  <span className="text">Marketcap</span>
+                  <br />
+                  <span className="text-greenish text-xl">
+                    {this.state.coin.market_data &&
+                      this.state.coin.market_data.market_cap[
+                        this.state.currency
+                      ].toLocaleString("us")}{" "}
+                    {this.state.currency}
+                  </span>
                 </div>
               </div>
-              <div className="border-l-2 border-secondary dark:border-dark-secondary"></div>
             </div>
+            <div className=" border-secondary dark:border-dark-secondary space-y-4 divide-y-2 divide-secondary dark:divide-dark-secondary">
+              <div className="flex py-3">
+                <div>
+                  <div className="rounded-full bg-secondary dark:bg-dark-secondary p-3 mx-3">
+                    CV
+                  </div>
+                </div>
+                <div>
+                  <span className="text">24hr volume</span>
+                  <br />
+                  <span className="text-greenish text-xl">
+                    {this.state.market_data.total_volumes &&
+                      parseInt(
+                        this.state.market_data.total_volumes[0][1]
+                      ).toLocaleString("us")}{" "}
+                    {this.state.currency}
+                  </span>
+                </div>
+              </div>
+              <div className="flex py-3">
+                <div>
+                  <div className="rounded-full bg-secondary dark:bg-dark-secondary p-3 mx-3">
+                    CV
+                  </div>
+                </div>
+                <div>
+                  <span className="text">24h Low / High</span>
+                  <br />
+                  <span className="text-greenish text-xl">
+                    {this.state.coin.market_data &&
+                      this.state.coin.market_data.low_24h[
+                        this.state.currency
+                      ].toLocaleString("us")}{" "}
+                    /{" "}
+                    {this.state.coin.market_data &&
+                      this.state.coin.market_data.high_24h[
+                        this.state.currency
+                      ].toLocaleString("us")}{" "}
+                    {this.state.currency.toUpperCase()}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="border-l-2 border-secondary dark:border-dark-secondary"></div>
           </div>
+        </div>
+          }
+          
           <div className="sm:grid sm:grid-cols-3 sm:space-x-3 mt-6 "></div>
           <div className="">
             <div className="sm:grid sm:grid-cols-12 sm:gap-3">
