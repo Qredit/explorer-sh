@@ -37,7 +37,7 @@ class Dashboard extends React.Component<{}, any> {
   }
 
   updateCurrency() {
-    this.setState({ currency: localStorage.getItem("currency") });
+    this.setState({ currency: localStorage.getItem("currency")? localStorage.getItem("currency") : "eur" });
     fetch(
       "https://api.coingecko.com/api/v3/coins/ark/market_chart?vs_currency=" +
         this.state.currency +
