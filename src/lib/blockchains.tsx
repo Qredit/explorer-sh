@@ -23,8 +23,9 @@ export const Blockchains = [
         name: "dev",
         title: "ARK Devnet",
         symbol: "ARK",
-        url: "https://dapi.ark.io/api",
         slp_url:"",
+        coingecko_id: "",
+        url: "https://dapi.ark.io/api",
         subdomain: "dark"
       },
     ]
