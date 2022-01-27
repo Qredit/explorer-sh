@@ -7,6 +7,7 @@ import BlockchainMenu from './BlockchainMenu'
 import SettingsMenu from "./SettingsMenu";
 import { BiSearch } from "react-icons/bi";
 import { MdKeyboardArrowDown } from "react-icons/md";
+
 const { lang } = i18n;
 const { navigation } = lang;
 
@@ -26,8 +27,11 @@ static contextType = BlockchainContext;
   constructor(props:any) {
     super(props)
     this.state = {
-      showModal:false
+      showModal:false,
+      showMobileMenu: false
     }
+    this.toggleMobileMenu = this.toggleMobileMenu.bind(this);
+
   }
 
   go() {
@@ -36,6 +40,10 @@ static contextType = BlockchainContext;
 
   setModalShow(show: boolean) {
     this.setState({showModal: show});
+  }
+
+  toggleMobileMenu() {
+    this.setState({showMobileMenu: !this.state.showMobileMenu});
   }
 
   render() {
@@ -52,6 +60,7 @@ static contextType = BlockchainContext;
                   className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                   aria-controls="mobile-menu"
                   aria-expanded="false"
+                  onClick={this.toggleMobileMenu}
                 >
                   <span className="sr-only">Open main menu</span>
                   <svg
@@ -87,7 +96,7 @@ static contextType = BlockchainContext;
                   </svg>
                 </button>
               </div>
-              <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+              <div className="flex-1 flex items-left justify-left ml-5 pl-6 sm:ml-0 sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 flex items-center">
                   <img
                     className="block lg:hidden h-12 w-auto"
@@ -105,10 +114,7 @@ static contextType = BlockchainContext;
                 <div className="ml-5 hidden sm:inline">
                 <input type="text" className=" appearance-none border-none rounded w-full py-2 px-3 text-gray-100 bg-secondary dark:bg-dark-secondary focus:outline-none " placeholder="Search in the blockchain..." />
                 </div>
-              </div>
-
-
-              
+              </div>              
 <div>
 
 <div className="py-2 none hidden sm:inline">
@@ -155,10 +161,10 @@ static contextType = BlockchainContext;
 <div className="none">
 <div className="py-2 inline sm:hidden">
 <div className="  flex justify-content-center drop-shadow-lg mx-2">
-                <input type="text" className="rounded appearance-none grow border-none mr-2 w-1/2 py-2 px-3 text-gray-600 dark:text-gray-400 bg-tertiary dark:bg-dark-tertiary hover:bg-hoverish dark:hover:bg-dark-hoverish focus-within:hover:bg-secondary focus-within:placeholder-transparent focus-within:bg-secondary dark:focus-within:bg-dark-hoverish focus:outline-none " placeholder="Search in ARK blockchain..." />
+                <input type="text" className="rounded appearance-none grow border-none mr-2 w-1/2 py-2 px-3 text-gray-600 dark:text-gray-400 bg-tertiary dark:bg-dark-tertiary hover:bg-hoverish dark:hover:bg-dark-hoverish focus-within:hover:bg-secondary focus-within:placeholder-transparent focus-within:bg-secondary dark:focus-within:bg-dark-hoverish focus:outline-none " placeholder="Search in the blockchain..." />
         </div>
   </div>
-          <div className="sm:hidden" id="mobile-menu">
+          <div className={this.state.showMobileMenu? 'inline sm:hidden' : 'hidden sm:hidden'} id="mobile-menu">
             <div className="px-2 pt-2 pb-3 space-y-1">
             {navigation.links.map((hname, href) => (
               <a

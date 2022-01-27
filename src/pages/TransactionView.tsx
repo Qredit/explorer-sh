@@ -56,7 +56,7 @@ export const TransactionView = () => {
       .then((d) => {
           let dd = d.body.data;
           setTx({confirmations:dd.confirmations, amount: dd.amount, fee: dd.fee, timestamp: dd.timestamp, type: dd.type, recipient: dd.recipient, sender: dd.sender, vendorField: dd.vendorField, blockId: dd.blockId});
-          explorer.on(blockchain).slp.transaction(tx_id).then((ds) => {
+          explorer.on(blockchain).slp.transaction(tx_id).then((ds:any) => {
             setSlpTx(ds)
           })
       });

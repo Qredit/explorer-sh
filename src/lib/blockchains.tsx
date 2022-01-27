@@ -2,8 +2,6 @@
 	Default blockchains for explorer-sh. 
 */
 
-
-
 export const Blockchains = [
  {
     title: "ARK",
@@ -89,12 +87,13 @@ export const Blockchains = [
         title: "Compendia Testnet",
         symbol: "Tß",
         slp_url:"",
+        coingecko_id: "",
         url: "https://apis-testnet.compendia.org/api/v2",
         subdomain: "tbind"
       },
     ],
   },
- {
+/*  {
     title: "Blockpool",
     delegates: 51,
     logo: "/assets/img/currencies/bpl.svg",
@@ -104,9 +103,10 @@ export const Blockchains = [
         title: "Blockpool Mainnet",
         symbol: "β",
         slp_url:"",
+        coingecko_id: "",
         url: "http://explorer.blockpool.io:9031/api",
         subdomain: "bpl"
       },
     ],
-  },
+  }, */
 ];

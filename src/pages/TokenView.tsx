@@ -34,7 +34,7 @@ function classNames(...classes: string[]) {
     explorer
       .on(blockchain)
       .slp.token(token_address)
-      .then((d) => {
+      .then((d:any) => {
         setToken(d);
       });
   }, []);

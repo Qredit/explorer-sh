@@ -45,7 +45,7 @@ TokenHoldersTableState
     .on(blockchain)
     .slp
     .tokenHolders(this.props.token_id)
-    .then((d) => {
+    .then((d:any) => {
       this.setState({ holders: d });
     });
   }

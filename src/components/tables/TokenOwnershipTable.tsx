@@ -35,7 +35,7 @@ class TokenOwnershipTable extends React.Component<{wallet:string}, TokenOwnershi
     let blockchain = this.context;
     const getData = () => {
       explorer.on(blockchain).slp.tokensByOwner(this.props.wallet)
-      .then((d) => {
+      .then((d:any) => {
         this.setState({ tokens: d });
       });
     }

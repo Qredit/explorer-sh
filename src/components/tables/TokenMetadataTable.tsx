@@ -45,7 +45,7 @@ TokenMetadataTableState
     .on(blockchain)
     .slp
     .token(this.props.token_id)
-    .then((d) => {
+    .then((d:any) => {
       this.setState({ tokenWithMeta: d });
       console.log(d);
     });

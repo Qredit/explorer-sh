@@ -35,7 +35,7 @@ class TokenHoldingsTable extends React.Component<{wallet:string}, TokenHoldingsT
     let blockchain = this.context;
     const getData = () => {
       explorer.on(blockchain).slp.tokenHoldings(this.props.wallet)
-      .then((d) => {
+      .then((d:any) => {
         this.setState({ tokens: d });
       });
     }

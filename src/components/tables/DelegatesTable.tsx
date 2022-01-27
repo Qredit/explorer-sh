@@ -11,9 +11,10 @@ import {
   BlockId,
 } from "./Cells";
 import explorer from "../../lib/api";
-import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
+import { MdArrowBackIos, MdArrowForwardIos, MdOutlineCancel } from "react-icons/md";
 import { Blockchains } from "../../lib/blockchains";
 import { networkInterfaces } from "os";
+import { AiOutlineCheckCircle } from "react-icons/ai";
 
 const { lang } = i18n;
 const { navigation } = lang;
@@ -222,7 +223,7 @@ class DelegatesTable extends React.Component<{status: string}, DelegatesTableSta
                 </td>
                 <td className="text-center">{parseInt((parseInt(delegate.votes)/1000000).toFixed(0)).toLocaleString("us")} {this.state.network.symbol}  <span className="text-gray-600 dark:text-gray-400">{((100 * delegate.votes) / parseInt(this.state.supply)).toFixed(4)}%</span></td>
                 {this.props.status == "active" && <td className="text-center">
-                  {delegate.blocks.produced > 0 && delegate.blocks.last && isForging(delegate.blocks.last.timestamp.human) == 0 ? <span className="rounded px-2 py-1 bg-secondary dark:bg-dark-secondary">yes</span>: <span className="rounded px-2 py-1 bg-secondary dark:bg-dark-secondary">no</span>}
+                  {delegate.blocks.produced > 0 && delegate.blocks.last && isForging(delegate.blocks.last.timestamp.human) == 0 ? <span className="rounded px-2 py-1 text-green-400 "><AiOutlineCheckCircle className="mx-auto text-xl"/></span>: <span className="rounded px-2 py-1 text-red-600"><MdOutlineCancel className="mx-auto text-xl"/></span>}
                 </td>}
                 <td className="text-center">
                 {delegate.blocks.produced > 0 ? <Timestamp value={delegate.blocks.last.timestamp.human}/> : <span className="text-gray-600 dark:text-gray-400 italic">Never</span>  }

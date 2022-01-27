@@ -47,7 +47,7 @@ TokenTransactionsTableState
         .on(blockchain)
         .slp
         .tokenTransactions(this.props.token_id)
-        .then((d) => {
+        .then((d:any) => {
           this.setState({ transactions: d });
         });
       } else {
@@ -55,7 +55,7 @@ TokenTransactionsTableState
         .on(blockchain)
         .slp
         .tokenTransactions(this.props.token_id)
-        .then((d) => {
+        .then((d:any) => {
           this.setState({ transactions: d });
         });
       }

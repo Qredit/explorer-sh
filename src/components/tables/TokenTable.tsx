@@ -35,7 +35,7 @@ class TokenTable extends React.Component<{}, TokenTableState> {
     let blockchain = this.context;
     const getData = () => {
       explorer.on(blockchain).slp.tokens()
-      .then((d) => {
+      .then((d:any) => {
         this.setState({ tokens: d });
       });
     }
