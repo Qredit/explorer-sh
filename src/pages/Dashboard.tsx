@@ -167,6 +167,8 @@ class Dashboard extends React.Component<{}, any> {
                       {this.state.coin.market_data &&
                         this.state.coin.market_data.current_price[
                           this.state.currency
+                        ] && this.state.coin.market_data.current_price[
+                          this.state.currency
                         ].toFixed(4)}{" "}
                       {this.state.currency}
                     </span>{" "}
