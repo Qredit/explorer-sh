@@ -221,7 +221,7 @@ class DelegatesTable extends React.Component<{status: string}, DelegatesTableSta
                 <td className="text-center">
                 <a href={`/${this.context}/wallet/${delegate.address}`} className="text-greenish">{delegate.username}</a>
                 </td>
-                <td className="text-center">{parseInt((parseInt(delegate.votes)/10000000000).toFixed(0)).toLocaleString("us")} {this.state.network.symbol}  <span className="text-gray-600 dark:text-gray-400">{((100 * delegate.votes) / parseInt(this.state.supply)).toFixed(4)}%</span></td>
+                <td className="text-center">{parseInt((parseInt(delegate.votes)/100000000).toFixed(0)).toLocaleString("us")} {this.state.network.symbol}  <span className="text-gray-600 dark:text-gray-400">{((100 * delegate.votes) / parseInt(this.state.supply)).toFixed(4)}%</span></td>
                 {this.props.status == "active" && <td className="text-center">
                   {delegate.blocks.produced > 0 && delegate.blocks.last && isForging(delegate.blocks.last.timestamp.human) == 0 ? <span className="rounded px-2 py-1 text-green-400 "><AiOutlineCheckCircle className="mx-auto text-xl"/></span>: <span className="rounded px-2 py-1 text-red-600"><MdOutlineCancel className="mx-auto text-xl"/></span>}
                 </td>}
