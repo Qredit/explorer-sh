@@ -7,7 +7,7 @@ import BlockchainMenu from './BlockchainMenu'
 import SettingsMenu from "./SettingsMenu";
 import { BiSearch } from "react-icons/bi";
 import { MdKeyboardArrowDown } from "react-icons/md";
-
+import Search from './../Search'
 const { lang } = i18n;
 const { navigation } = lang;
 
@@ -28,14 +28,19 @@ static contextType = BlockchainContext;
     super(props)
     this.state = {
       showModal:false,
-      showMobileMenu: false
+      showMobileMenu: false,
+      query: ""
     }
     this.toggleMobileMenu = this.toggleMobileMenu.bind(this);
-
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   go() {
 
+  }
+
+  handleSearch(event:React.FormEvent<HTMLInputElement>) {
+    this.setState({query: event.currentTarget.value})
   }
 
   setModalShow(show: boolean) {
@@ -112,7 +117,8 @@ static contextType = BlockchainContext;
                   </div>
                 </div>
                 <div className="ml-5 hidden sm:inline">
-                <input type="text" className=" appearance-none border-none rounded w-full py-2 px-3 text-gray-100 bg-secondary dark:bg-dark-secondary focus:outline-none " placeholder="Search in the blockchain..." />
+                <input type="text" className=" appearance-none border-none rounded w-full py-2 px-3 text-gray-100 bg-secondary dark:bg-dark-secondary focus:outline-none " id="searchInput" placeholder="Search in the blockchain..." onChange={this.handleSearch} />
+                <Search query={this.state.query} />
                 </div>
               </div>              
 <div>
@@ -162,6 +168,7 @@ static contextType = BlockchainContext;
 <div className="py-2 inline sm:hidden">
 <div className="  flex justify-content-center drop-shadow-lg mx-2">
                 <input type="text" className="rounded appearance-none grow border-none mr-2 w-1/2 py-2 px-3 text-gray-600 dark:text-gray-400 bg-tertiary dark:bg-dark-tertiary hover:bg-hoverish dark:hover:bg-dark-hoverish focus-within:hover:bg-secondary focus-within:placeholder-transparent focus-within:bg-secondary dark:focus-within:bg-dark-hoverish focus:outline-none " placeholder="Search in the blockchain..." />
+                
         </div>
   </div>
           <div className={this.state.showMobileMenu? 'inline sm:hidden' : 'hidden sm:hidden'} id="mobile-menu">

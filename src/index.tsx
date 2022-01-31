@@ -12,7 +12,6 @@ import {
 } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Transactions from "./pages/Transactions";
-import LatestBlocks from "./pages/LatestBlocks";
 import Wallets from "./pages/Wallets";
 import Tokens from "./pages/Tokens";
 import Delegates from "./pages/Delegates";

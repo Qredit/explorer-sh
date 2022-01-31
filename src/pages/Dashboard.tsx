@@ -13,6 +13,7 @@ import {
   Timestamp,
 } from "../components/tables/Cells";
 import { Blockchains } from "../lib/blockchains";
+import Search from "../components/Search";
 
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
@@ -33,8 +34,15 @@ class Dashboard extends React.Component<{}, any> {
       currency: localStorage.getItem("currency")
         ? localStorage.getItem("currency")
         : "eur",
+      query: ""
     };
     this.updateCurrency = this.updateCurrency.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+
+  }
+
+  handleSearch(event:React.FormEvent<HTMLInputElement>) {
+    this.setState({query: event.currentTarget.value})
   }
 
   updateCurrency() {
@@ -132,7 +140,7 @@ class Dashboard extends React.Component<{}, any> {
               <div className="py-6 text-2xl px-3 sm:px-0">
                 Blockchain info and stats
               </div>
-              <div className="  flex justify-content-center drop-shadow-lg ml-2 sm:m-0">
+{/*               <div className="  flex justify-content-center drop-shadow-lg ml-2 sm:m-0">
                 <div className="bg-tertiary dark:bg-dark-tertiary py-2 px-4 rounded-l">
                   <div className="flex">
                     Filter <MdKeyboardArrowDown className="mt-1 ml-2" />
@@ -142,11 +150,14 @@ class Dashboard extends React.Component<{}, any> {
                   type="text"
                   className=" appearance-none border-none  w-1/2 py-2 px-3 text-gray-600 dark:text-gray-400 bg-tertiary dark:bg-dark-tertiary hover:bg-hoverish dark:hover:bg-dark-hoverish focus-within:hover:bg-secondary focus-within:placeholder-transparent focus-within:bg-secondary dark:focus-within:bg-dark-hoverish focus:outline-none "
                   placeholder="Search in the blockchain..."
+                  id="searchInput"
+                  onChange={this.handleSearch}
                 />{" "}
                 <div className="bg-greenish py-2 px-4 rounded-r">
                   <BiSearch className="text-xl text-white" />
                 </div>
-              </div>
+                <Search query={this.state.query} />
+              </div> */}
             </div>
           </div>
           {this.state.coin.market_data && 
