@@ -17,8 +17,8 @@ function App() {
       <Outlet/>
       </div>
       <div className="mt-8 h-12  border-t-2 border-secondary dark:border-dark-secondary text-center text-white">
-        <div className="max-w-7xl mx-auto py-6">
-            2022 copyleft explorer.sh | Made by <a href="#" className="text-greenish">xbridge project</a> | Market Data by <a href="#" className="text-greenish">coingecko</a> 
+        <div className="max-w-7xl mx-auto py-6 text-black dark:text-white">
+            2022 copyleft explorer.sh | Made by <a href="https://xbridge.sh/" className="text-greenish">xbridge project</a> | Market Data by <a href="https://coingecko.com" className="text-greenish">coingecko</a> 
         </div>
       </div>
       </BlockchainContext.Provider>
